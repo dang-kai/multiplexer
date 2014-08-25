@@ -8,14 +8,14 @@ const int C1 = 5;
 const int C2 = 6;
 //channel address pins
 //read function channelSelect before change pin assignment
-const int S0   =  0;
-const int S1   =  1;
-const int S2   =  2;
-const int S3   =  3;
+const int S0   =  3;
+const int S1   =  2;
+const int S2   =  1;
+const int S3   =  0;
 const int LED  = 13;
 //const channels
 const char CH_VCC = 47;
-const char CH_GND = 46;
+const char CH_VSS = 46;
 
 //global variables
 char c_channel=-1; //current selected channel
@@ -59,11 +59,12 @@ char channelSelect(char channel)
 
   //unselect all chips first
   chipSelect(-1);
-  //only works when S0-S3 = pin 0~3
+  
   char i;
+  int addrPin[4]={S0,S1,S2,S3};
   for(i=0;i<4;++i)
   {
-    pin%2?digitalWrite(i,HIGH):digitalWrite(i,LOW);
+    pin%2?digitalWrite(addrPin[i],HIGH):digitalWrite(addrPin[i],LOW);
     pin/=2;
   }
   chipSelect(chip);
@@ -81,7 +82,7 @@ void sendBinUchar(uchar data,int d)
   }
   for(i=0;i<8;++i)
   {
-    bins[i]?channelSelect(CH_VCC):channelSelect(CH_GND);
+    bins[i]?channelSelect(CH_VCC):channelSelect(CH_VSS);
     delay(d);
   }
 }
@@ -117,7 +118,7 @@ void loop()
   digitalWrite(LED,HIGH);
   delay(100);
   digitalWrite(LED,LOW);
-  ch%=47;
+  ch%=46;
 }
 
 
