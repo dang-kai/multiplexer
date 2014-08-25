@@ -3,9 +3,9 @@
 
 // Pins
 //chip select pins
-const int C0 = 17;
+const int C0 = 19;
 const int C1 = 18;
-const int C2 = 19;
+const int C2 = 17;
 //channel address pins
 //read function channelSelect before change pin assignment
 const int S0   =  4;
