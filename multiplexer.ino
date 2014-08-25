@@ -1,17 +1,17 @@
 #define uchar unsigned char
 #define uint unsigned int
 
-// Pins
+// Pins (Serial communication is no longer avaliable)
 //chip select pins
-const int C0 = 19;
-const int C1 = 18;
-const int C2 = 17;
+const int C0 = 4;
+const int C1 = 5;
+const int C2 = 6;
 //channel address pins
 //read function channelSelect before change pin assignment
-const int S0   =  4;
-const int S1   =  5;
-const int S2   =  6;
-const int S3   =  7;
+const int S0   =  0;
+const int S1   =  1;
+const int S2   =  2;
+const int S3   =  3;
 const int LED  = 13;
 //const channels
 const char CH_VCC = 47;
@@ -59,11 +59,11 @@ char channelSelect(char channel)
 
   //unselect all chips first
   chipSelect(-1);
-  //only works for S0-S3 = pin 4-7 
+  //only works when S0-S3 = pin 0~3
   char i;
   for(i=0;i<4;++i)
   {
-    pin%2?digitalWrite(i+4,HIGH):digitalWrite(i+4,LOW);
+    pin%2?digitalWrite(i,HIGH):digitalWrite(i,LOW);
     pin/=2;
   }
   chipSelect(chip);
