@@ -3,9 +3,9 @@
 
 // Pins (Serial communication is no longer avaliable)
 //chip select pins
-const int C0 = 4;
-const int C1 = 5;
-const int C2 = 6;
+const int C0 = 7;
+const int C1 = 6;
+const int C2 = 5;
 //channel address pins
 //read function channelSelect before change pin assignment
 const int S0   =  3;
@@ -91,6 +91,13 @@ void sendBinUchar(uchar data,int d)
 void channelSelectH(char ch,int d)
 {
   sendBinUchar((uchar)ch,d);
+  channelSelect(ch);
+}
+
+void channelSelectB(char ch,int d)
+{
+  ch==0?channelSelect(CH_VSS):channelSelect(CH_VCC);
+  delay(d);
   channelSelect(ch);
 }
 
