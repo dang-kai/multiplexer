@@ -49,11 +49,7 @@ char channelSelect(char channel)
   {
     return -1;
   }
-//  if(c_channel==channel)
-//  {
-//    return 0;
-//  }
-
+  
   char chip=channel/16;
   char pin=channel%16;
 
@@ -83,13 +79,14 @@ void sendBinUchar(uchar data,int d)
   for(i=0;i<8;++i)
   {
     bins[i]?channelSelect(CH_VCC):channelSelect(CH_VSS);
-    delay(d);
+    delayMicroseconds(d);
   }
 }
 
 //channel
 void channelSelectH(char ch,int d)
 {
+  channelSelect(CH_VCC);
   sendBinUchar((uchar)ch,d);
   channelSelect(ch);
 }
@@ -97,7 +94,7 @@ void channelSelectH(char ch,int d)
 void channelSelectB(char ch,int d)
 {
   ch==0?channelSelect(CH_VSS):channelSelect(CH_VCC);
-  delay(d);
+  delayMicroseconds(d);
   channelSelect(ch);
 }
 
@@ -118,14 +115,24 @@ void setup()
 // the loop routine runs over and over again forever:
 // variables for loop
 char ch=0;
-void loop() 
+void loop()
 {
-  channelSelectH(ch++,20);
-  delay(100);
-  digitalWrite(LED,HIGH);
-  delay(100);
-  digitalWrite(LED,LOW);
-  ch%=46;
+  for(ch=26;ch<46;++ch)
+  {
+    channelSelectH(ch,0.5*1000);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1990);
+    digitalWrite(LED,HIGH);
+  }
+  for(ch=0;ch<16;++ch)
+  {
+    channelSelectH(ch,0.5*1000);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1990);
+    digitalWrite(LED,HIGH);
+  }
 }
 
 
